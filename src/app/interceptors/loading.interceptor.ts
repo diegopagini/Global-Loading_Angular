@@ -1,18 +1,21 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { finalize, Observable } from 'rxjs';
+import { delay, finalize, Observable } from 'rxjs';
+
+import { SpinnerService } from '../services/spinner.service';
 
 @Injectable()
 export class LoadingInterceptor implements HttpInterceptor {
-  loading: boolean = false;
-
-  constructor() {}
+  constructor(private _sipinnerService: SpinnerService) {}
 
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    this.loading = true;
-    return next.handle(request).pipe(finalize(() => (this.loading = false)));
+    this._sipinnerService.setLoader(true);
+    return next.handle(request).pipe(
+      delay(2500),
+      finalize(() => this._sipinnerService.setLoader(false))
+    );
   }
 }

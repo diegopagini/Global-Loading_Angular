@@ -1,5 +1,13 @@
-<main>
+<main class="main">
   <section>
     <h1>Hello World</h1>
+
+    <div>
+      <button (click)="getPokemons()">Get Pokemons</button>
+    </div>
   </section>
 </main>
+
+<section *ngIf="isLoading$ | async" class="spinner">
+  <h1>Loading</h1>
+</section>
