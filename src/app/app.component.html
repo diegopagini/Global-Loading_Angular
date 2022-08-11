@@ -1,13 +1,21 @@
 <main class="main">
-  <section>
-    <h1>Hello World</h1>
+  <div class="container">
+    <button mat-raised-button (click)="getPokemons()" color="primary">
+      Get Pokemons
+    </button>
 
-    <div>
-      <button (click)="getPokemons()">Get Pokemons</button>
-    </div>
-  </section>
+    <button mat-raised-button (click)="getStarWarsPeople()" color="warn">
+      Get Star Wars People
+    </button>
+  </div>
+
+  <div class="data">
+    <pre *ngIf="data">{{ data | json }}</pre>
+  </div>
 </main>
 
+<router-outlet></router-outlet>
+
 <section *ngIf="isLoading$ | async" class="spinner">
-  <h1>Loading</h1>
+  <mat-spinner color="accent"></mat-spinner>
 </section>

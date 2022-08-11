@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 
 import { PokemonService } from './services/pokemon.service';
 import { SpinnerService } from './services/spinner.service';
+import { StarWarsService } from './services/star-wars.service';
 
 @Component({
   selector: 'app-root',
@@ -11,10 +12,12 @@ import { SpinnerService } from './services/spinner.service';
 })
 export class AppComponent implements OnInit {
   isLoading$: Observable<boolean>;
+  data: any;
 
   constructor(
     private _spinnerService: SpinnerService,
-    private _pokemonService: PokemonService
+    private _pokemonService: PokemonService,
+    private _starWarsService: StarWarsService
   ) {}
 
   ngOnInit(): void {
@@ -22,6 +25,12 @@ export class AppComponent implements OnInit {
   }
 
   getPokemons(): void {
-    this._pokemonService.getPokemons().subscribe(console.log);
+    this._pokemonService.getPokemons().subscribe((data) => (this.data = data));
+  }
+
+  getStarWarsPeople(): void {
+    this._starWarsService
+      .getStarWarsPeople()
+      .subscribe((data) => (this.data = data));
   }
 }
